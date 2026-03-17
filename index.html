@@ -21,6 +21,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#attendance-section" class="nav-link active" data-section="attendance-section">Attendance</a></li>
+                <li><a href="#erp-login-section" class="nav-link" data-section="erp-login-section">ERP Sync</a></li>
                 <li><a href="#dashboard-section" class="nav-link" data-section="dashboard-section">Dashboard</a></li>
                 <li><a href="#canteen-section" class="nav-link" data-section="canteen-section">Canteen</a></li>
             </ul>
@@ -87,6 +88,38 @@
                     Calculate
                 </button>
             </form>
+        </section>
+
+        <!-- ===== ERP LOGIN SECTION ===== -->
+        <section id="erp-login-section" class="content-section">
+            <div class="section-header">
+                <h2>ERP Sync</h2>
+                <p class="section-subtitle">Log in to safely scrape your attendance directly from the university ERP.</p>
+            </div>
+
+            <form id="erp-login-form" class="attendance-form" novalidate>
+                <div class="form-group">
+                    <label for="erp-username">Student ID / Username</label>
+                    <input type="text" id="erp-username" required placeholder="e.g. 210003xxxx">
+                </div>
+                <div class="form-group">
+                    <label for="erp-password">Password</label>
+                    <input type="password" id="erp-password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="erp-captcha">CAPTCHA (Mock)</label>
+                    <input type="text" id="erp-captcha" placeholder="Enter CAPTCHA">
+                </div>
+                <div id="erp-login-error" class="form-error" style="display:block; margin-bottom: 1rem;"></div>
+                <button type="submit" id="erp-login-btn" class="btn btn-primary">
+                    <span class="btn-icon">🔐</span> Sync Attendance
+                </button>
+            </form>
+            
+            <div id="erp-loading-state" class="loading-state" style="display:none; margin-top:2rem;">
+                <div class="spinner"></div>
+                <p>Authenticating and scraping data...</p>
+            </div>
         </section>
 
         <!-- ===== DASHBOARD SECTION ===== -->

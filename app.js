@@ -200,7 +200,74 @@ clearDashboardBtn.addEventListener('click', () => {
 });
 
 /* ============================================================
-   4. CANTEEN — Seat Booking with localStorage (Tasks 6-9)
+   4. ERP LOGIN & SYNC (Task to integrate Python backend)
+   ============================================================ */
+const erpLoginForm = document.getElementById('erp-login-form');
+const erpUsernameInput = document.getElementById('erp-username');
+const erpPasswordInput = document.getElementById('erp-password');
+const erpCaptchaInput = document.getElementById('erp-captcha');
+const erpLoginError = document.getElementById('erp-login-error');
+const erpLoadingState = document.getElementById('erp-loading-state');
+
+if (erpLoginForm) {
+    erpLoginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        erpLoginError.textContent = '';
+        
+        const username = erpUsernameInput.value.trim();
+        const password = erpPasswordInput.value;
+        const captcha = erpCaptchaInput.value.trim();
+
+        if (!username || !password) {
+            erpLoginError.textContent = 'Please enter username and password.';
+            return;
+        }
+
+        // Show loading state
+        erpLoginForm.style.display = 'none';
+        erpLoadingState.style.display = 'block';
+
+        try {
+            const response = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, captcha })
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.error || 'Failed to login to ERP');
+            }
+
+            // Successfully fetched data
+            if (result.attendanceData && Array.isArray(result.attendanceData)) {
+                result.attendanceData.forEach(course => {
+                    const percentage = calculatePercentage(course.attended, course.conducted);
+                    const safeToMiss = calculateSafeToMiss(course.attended, course.conducted);
+                    const needToAttend = calculateNeedToAttend(course.attended, course.conducted);
+                    
+                    renderCourseCard({ 
+                        courseName: course.courseName, 
+                        conducted: course.conducted, 
+                        attended: course.attended, 
+                        percentage, 
+                        safeToMiss, 
+                        needToAttend 
+                    });
+                });
+            }
+
+        } catch (error) {
+            erpLoginError.textContent = error.message;
+        } finally {
+            erpLoginForm.style.display = 'block';
+            erpLoadingState.style.display = 'none';
+        }
+    });
+}
+
+/* ============================================================
+   5. CANTEEN — Seat Booking with localStorage (Tasks 6-9)
    ============================================================ */
 
 const SEAT_COUNT       = 50;
