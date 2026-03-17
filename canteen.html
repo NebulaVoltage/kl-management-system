@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KLH University Canteen Seat Booking — Reserve your lunch seat in advance.">
+    <title>KLH University &mdash; Canteen Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="kl_logo.png" alt="KLH University Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-fallback" style="display:none;">🎓</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Home">
+                    <span class="material-symbols-outlined">home</span>
+                    <span class="nav-label">Home</span>
+                </a>
+                <a href="index.html#attendance" class="nav-item" title="Attendance">
+                    <span class="material-symbols-outlined">menu_book</span>
+                    <span class="nav-label">Attendance</span>
+                </a>
+                <a href="canteen.html" class="nav-item active" title="Canteen">
+                    <span class="material-symbols-outlined">coffee</span>
+                    <span class="nav-label">Canteen</span>
+                </a>
+                <a href="index.html#todo" class="nav-item" title="To-Do">
+                    <span class="material-symbols-outlined">checklist</span>
+                    <span class="nav-label">To-Do</span>
+                </a>
+                <a href="index.html#timetable" class="nav-item" title="Timetable">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <span class="nav-label">Schedule</span>
+                </a>
+                <div class="divider"></div>
+                <a href="#" class="nav-item badge-item" title="Notifications">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="badge"></span>
+                    <span class="nav-label">Alerts</span>
+                </a>
+            </nav>
+            <div class="nav-bottom">
+                <a href="#" class="nav-item" id="logout-btn" title="Logout">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span class="nav-label">Logout</span>
+                </a>
+                <a href="#" class="nav-item" title="Settings">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+
+            <!-- Top Bar -->
+            <header class="canteen-top-bar glass-bar">
+                <div class="canteen-title-area">
+                    <a href="index.html" class="back-link">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </a>
+                    <h1>☕ Canteen Seat Booking</h1>
+                </div>
+                <div class="canteen-controls">
+                    <select id="time-slot-select" class="canteen-select">
+                        <option value="12:00 PM - 1:00 PM">12:00 PM - 1:00 PM</option>
+                        <option value="1:00 PM - 2:00 PM">1:00 PM - 2:00 PM</option>
+                        <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
+                    </select>
+                    <button class="btn btn-outline btn-sm" id="reset-seats-btn">
+                        <span class="material-symbols-outlined" style="font-size:16px;">restart_alt</span> Reset
+                    </button>
+                    <button class="icon-btn" id="dark-mode-toggle" title="Toggle Dark Mode">
+                        <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Screen / Counter Indicator -->
+            <div class="screen-indicator">
+                <div class="screen-line"></div>
+                <span>FOOD COUNTER</span>
+                <div class="screen-line"></div>
+            </div>
+
+            <!-- Legend -->
+            <div class="seat-legend">
+                <div class="legend-item">
+                    <div class="legend-box available"></div><span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box selected"></div><span>Your Selection</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box occupied"></div><span>Occupied</span>
+                </div>
+            </div>
+
+            <!-- Seat Grid (rows rendered by JS) -->
+            <div class="seat-grid" id="seat-grid">
+                <!-- JS renders rows here -->
+            </div>
+
+            <!-- Booking Summary Bar -->
+            <div class="booking-summary glass-bar" id="booking-summary">
+                <div class="summary-info">
+                    <span>Selected: <strong id="selected-count">0</strong> / 4</span>
+                    <span class="summary-divider">|</span>
+                    <span>Slot: <strong id="summary-slot">12:00 PM - 1:00 PM</strong></span>
+                </div>
+                <button class="btn btn-primary" id="confirm-booking-btn" disabled>
+                    Confirm Booking
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ========== BOOKING CONFIRMATION MODAL ========== -->
+    <div class="modal-overlay hidden" id="booking-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><span class="material-symbols-outlined">check_circle</span></div>
+            <h3>Booking Confirmed!</h3>
+            <p class="modal-detail" id="modal-slot-info"></p>
+            <p class="modal-booking-id">Booking ID: <strong id="modal-booking-id"></strong></p>
+            <p class="modal-seats" id="modal-seats-info"></p>
+            <button class="btn btn-primary btn-sm" id="modal-close-btn">Done</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <p>&copy; 2026 KLH University Student Portal. Built for End-Semester Project.</p>
+    </footer>
+
+    <script src="canteen.js"></script>
+</body>
+</html>

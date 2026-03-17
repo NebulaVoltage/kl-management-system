@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KLH University &mdash; Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body class="login-body dark">
+
+    <div class="login-container">
+        
+        <!-- Left Side: Typography inspired by DEMUX -->
+        <div class="login-left">
+            <div class="login-brand-logo">
+                <img src="kl_logo.png" alt="KLH Logo">
+            </div>
+            <h1>KLH PORTAL <span style="color:var(--accent);">2.0</span></h1>
+            <h2>One portal.<br>Infinite possibilities.</h2>
+            <ul>
+                <li>Seamless Attendance Tracking</li>
+                <li>Real-time Canteen Seat Booking</li>
+                <li>CGPA & SGPA Estimator</li>
+                <li>Productivity Tools & Timetable</li>
+            </ul>
+        </div>
+
+        <!-- Right Side: Login Form -->
+        <div class="login-right">
+            <form id="login-form" class="login-form">
+                <div class="input-group">
+                    <label for="login-id">University ID</label>
+                    <input type="text" id="login-id" placeholder="e.g. 2300030000" autocomplete="off">
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
+                </div>
+
+                <div class="captcha-section">
+                    <label>Security Check</label>
+                    <div class="captcha-display" id="captcha-display">ABCD</div>
+                    <button type="button" class="captcha-refresh" id="captcha-refresh" title="Refresh CAPTCHA">
+                        <span class="material-symbols-outlined" style="font-size:16px;">refresh</span>
+                    </button>
+                    <input type="text" id="captcha-input" placeholder="Type the code above" autocomplete="off">
+                </div>
+
+                <div id="login-error" class="login-error hidden">
+                    Invalid ID, Password, or CAPTCHA.
+                </div>
+
+                <button type="submit" class="btn btn-primary login-btn" id="login-btn">
+                    <span id="login-btn-text">Login Now &rarr;</span>
+                    <div class="spinner hidden" id="login-spinner"></div>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                &copy; 2026 KLH University Student Portal
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="login.js"></script>
+</body>
+</html>
