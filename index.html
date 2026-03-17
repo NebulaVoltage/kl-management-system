@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="University ERP Attendance Calculator and Canteen Seat Booking System">
+    <title>KL University — Attendance & Canteen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ========== HEADER / NAVIGATION ========== -->
+    <header id="site-header">
+        <nav id="main-nav">
+            <div class="nav-brand">
+                <span class="brand-icon">🎓</span>
+                <span class="brand-text">KL<span class="brand-accent">ERP</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#attendance-section" class="nav-link active" data-section="attendance-section">Attendance</a></li>
+                <li><a href="#dashboard-section" class="nav-link" data-section="dashboard-section">Dashboard</a></li>
+                <li><a href="#canteen-section" class="nav-link" data-section="canteen-section">Canteen</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="main-content">
+
+        <!-- ===== ATTENDANCE CALCULATOR SECTION ===== -->
+        <section id="attendance-section" class="content-section">
+            <div class="section-header">
+                <h1>Attendance Calculator</h1>
+                <p class="section-subtitle">Check how many classes you can safely miss — or need to attend — to maintain 75% attendance.</p>
+            </div>
+
+            <form id="attendance-form" class="attendance-form" novalidate>
+                <div class="form-group">
+                    <label for="course-name">Course Name</label>
+                    <input
+                        type="text"
+                        id="course-name"
+                        name="courseName"
+                        placeholder="e.g. Data Structures & Algorithms"
+                        required
+                        minlength="2"
+                        maxlength="100"
+                    >
+                    <span class="form-error" id="course-name-error"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="total-conducted">Total Conducted</label>
+                        <input
+                            type="number"
+                            id="total-conducted"
+                            name="totalConducted"
+                            placeholder="e.g. 40"
+                            required
+                            min="1"
+                            max="500"
+                        >
+                        <span class="form-error" id="conducted-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total-attended">Total Attended</label>
+                        <input
+                            type="number"
+                            id="total-attended"
+                            name="totalAttended"
+                            placeholder="e.g. 32"
+                            required
+                            min="0"
+                            max="500"
+                        >
+                        <span class="form-error" id="attended-error"></span>
+                    </div>
+                </div>
+
+                <button type="submit" id="calculate-btn" class="btn btn-primary">
+                    <span class="btn-icon">📊</span>
+                    Calculate
+                </button>
+            </form>
+        </section>
+
+        <!-- ===== DASHBOARD SECTION ===== -->
+        <section id="dashboard-section" class="content-section">
+            <div class="section-header">
+                <h2>Dashboard</h2>
+                <p class="section-subtitle">Your calculated course attendance results appear here.</p>
+            </div>
+
+            <div id="dashboard-container" class="dashboard-grid">
+                <!-- Course cards are dynamically injected here by app.js -->
+                <div class="empty-state" id="dashboard-empty">
+                    <span class="empty-icon">📋</span>
+                    <p>No courses added yet. Use the calculator above to add a course.</p>
+                </div>
+            </div>
+
+            <button type="button" id="clear-dashboard-btn" class="btn btn-outline" style="display:none;">
+                🗑️ Clear All
+            </button>
+        </section>
+
+        <!-- ===== CANTEEN SECTION ===== -->
+        <section id="canteen-section" class="content-section">
+            <div class="section-header">
+                <h2>Canteen Seat Booking</h2>
+                <p class="section-subtitle">Click on a green seat to book it. Your bookings persist across page refreshes.</p>
+            </div>
+
+            <div class="canteen-legend">
+                <div class="legend-item">
+                    <span class="legend-swatch available"></span> Available
+                </div>
+                <div class="legend-item">
+                    <span class="legend-swatch booked"></span> Booked
+                </div>
+            </div>
+
+            <div id="canteen-loading" class="loading-state">
+                <div class="spinner"></div>
+                <p>Fetching seat data...</p>
+            </div>
+
+            <div id="seat-grid" class="seat-grid">
+                <!-- 50 seat divs are dynamically rendered by app.js -->
+            </div>
+
+            <button type="button" id="reset-seats-btn" class="btn btn-outline">
+                🔄 Reset All Seats
+            </button>
+        </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="site-footer">
+        <p>&copy; 2026 KL University ERP Wrapper. Built for End-Semester Project.</p>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
